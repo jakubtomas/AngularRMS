@@ -103,6 +103,7 @@ export class MeetingService {
   deleteMeetingsByIdBusiness(idBusiness: string, dateForCalendar: string): Observable<void[]> {
 
     return this.getMeetingsByIdBusinessByDate(idBusiness, dateForCalendar).pipe(
+      take(1),
       switchMap((arrayMeetings: Meeting[]) =>
         forkJoin(arrayMeetings.map(meeting => {
           return this.deleteMeeting(meeting.id);
