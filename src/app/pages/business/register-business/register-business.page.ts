@@ -22,7 +22,7 @@ export class RegisterBusinessPage implements OnInit {
   firebaseErrorMessage: string;
   createdNewBusiness = false;
   updateBusinessPage = false;
-  typesOrganization: object = null;
+  typesOrganization = null;
 
   //component data
   ionTitle: string;

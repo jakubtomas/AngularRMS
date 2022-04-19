@@ -22,7 +22,7 @@ export class ListBusinessPage implements OnInit, OnDestroy {
 
   items: Item[];
   messageFirebase: string;
-  private orderBy = 'nameOrganization';
+  orderBy = 'nameOrganization';
   directionOrderBy = 'asc';
   businesses: Business[];
 

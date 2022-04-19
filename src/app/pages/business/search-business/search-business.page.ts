@@ -18,7 +18,7 @@ export class SearchBusinessPage implements OnInit {
   business: Business;
   businessId: string;
   firebaseErrorMessage: string;
-  typesOrganization: object = null;
+  typesOrganization = null;
   orderBy = 'nameOrganization';
   searching = false;
 

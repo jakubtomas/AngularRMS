@@ -62,7 +62,7 @@ export class DetailMeetingPage implements OnInit, OnDestroy {
       );
   }
 
-  private async showAlertForDeleteMeeting(docIdMeeting: string): Promise<any> {
+  public async showAlertForDeleteMeeting(docIdMeeting: string): Promise<any> {
 
 
     const alert = await this.alertController.create({

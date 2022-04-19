@@ -8,14 +8,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
-import { AngularFirestoreModule } from "@angular/fire/compat/firestore";
-import { AngularFireModule } from "@angular/fire/compat";
-import { AngularFireDatabaseModule } from "@angular/fire/compat/database";
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { OrderBusinessesPipe } from './pipes/order-businesses.pipe';
 import { OrderByOpeningHoursPipe } from './pipes/order-by-opening-hours.pipe';
 import { FormatMeetingPipe } from './shared/shared/pipes/format-meeting.pipe';
-import { SharedModule } from "./shared/shared/shared.module";
+import { SharedModule } from './shared/shared/shared.module';
 // import { OrderBusinessesPipe } from './order-businesses.pipe';
 
 @NgModule({
