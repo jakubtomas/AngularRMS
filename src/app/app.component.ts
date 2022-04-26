@@ -8,6 +8,7 @@ import { BusinessService } from './services/business.service';
 import { Subject, Subscription } from 'rxjs';
 import { UserService } from './services/user.service';
 import { UserDetails } from './interfaces/userDetails';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -52,6 +53,7 @@ export class AppComponent implements OnDestroy {
     private authService: AuthService,
     private businessService: BusinessService,
     private userService: UserService,
+    private menu: MenuController
   ) { }
 
   ngOnInit(): void { }

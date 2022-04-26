@@ -40,6 +40,7 @@ export class CreateCalendarPage implements OnInit {
   private allMeetingsFromDb: Meeting[] = [];
   private deleteDay = false;
   private dateForDelete = [];
+  private meetingsForDeleteFromDb = [];
   private allDatesForDelete = [];
   private allIdsMeetingsForDelete = [];
   private daysForDelete = [];
@@ -272,9 +273,21 @@ export class CreateCalendarPage implements OnInit {
   }
 
   private deleteMeetingsForUpdateCalendar() {
+    this.meetingsForDeleteFromDb = [];
+    //this.meetingService.deleteMeetingsByIdBusiness(this.selectedBusinessId, this.todayDate)
+    this.meetingService.deleteMeetingsByIdBusinessByDays(this.selectedBusinessId, this.todayDate, this.daysForDelete)
+      .toPromise().then((meetings: { idMeeting: string; day: string }[]) => {
 
-    this.meetingService.deleteMeetingsByIdBusiness(this.selectedBusinessId, this.todayDate)
-      .toPromise().then(() => {
+        meetings.forEach((meeting) => {
+          this.daysForDelete.forEach((day) => {
+            if (meeting.day === day) {
+              this.meetingsForDeleteFromDb.push(meeting);
+            }
+          });
+        });
+        // call foreach for delete
+        this.meetingsForDeleteFromDb.forEach((meeting) =>
+          this.meetingService.deleteMeeting(meeting.idMeeting));
 
       }).catch((error) => {
         console.log(error);

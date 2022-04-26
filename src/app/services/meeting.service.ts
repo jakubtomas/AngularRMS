@@ -3,7 +3,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { Meeting } from '../interfaces/meeting';
-import { map, switchMap, take, tap } from 'rxjs/operators';
+import { filter, map, switchMap, take, tap } from 'rxjs/operators';
 
 import { forkJoin, Observable, of, zip } from 'rxjs';
 import * as moment from 'moment';
@@ -112,16 +112,24 @@ export class MeetingService {
     );
   }
 
+  deleteMeetingsByIdBusinessByDays(idBusiness: string, dateForCalendar: string, daysForDelete: string[]): Observable<any> {
+
+    return this.getMeetingsByIdBusinessByDate(idBusiness, dateForCalendar).pipe(
+      take(1),
+      map((arrayMeeting: Meeting[]) => {
+        return arrayMeeting.map((meeting) => {
+          return { idMeeting: meeting.id, day: moment(meeting.dateForCalendar).format('dddd') };
+        });
+      }),
+    );
+  }
 
   getMeetingByIdBusinessByDateWithUserDetails(idBusiness: string, dateForCalendar: string) {
     return this.getMeetingsByIdBusinessByDate(idBusiness, dateForCalendar).pipe(
       switchMap((arrayMeetings: Meeting[]) =>
         zip(arrayMeetings.map(meeting => {
-
-
           return this.userService.getUserDetailsInformation(meeting.idUser).pipe(
             map((userDetails) => {
-
               return { userDetails, meeting };
             }
             ));

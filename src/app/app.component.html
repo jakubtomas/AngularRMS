@@ -55,12 +55,10 @@
             </ion-menu-toggle> -->
           </div>
 
-          <ion-menu-toggle autoHide="false" (ionChange)="clickToggle($event)">
-            <ion-item>
-              <ion-toggle slot="start" name="kiwi" color="success"></ion-toggle>
-              <ion-label>Business mode</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
+          <ion-item (ionChange)="clickToggle($event)">
+            <ion-toggle slot="start" name="kiwi" color="success"></ion-toggle>
+            <ion-label>Business mode</ion-label>
+          </ion-item>
 
           <ion-menu-toggle autoHide="false">
             <ion-item button (click)="signOut()" detail="false">
