@@ -278,6 +278,7 @@ export class CreateCalendarPage implements OnInit {
     this.meetingService.deleteMeetingsByIdBusinessByDays(this.selectedBusinessId, this.todayDate, this.daysForDelete)
       .toPromise().then((meetings: { idMeeting: string; day: string }[]) => {
 
+        // filter days
         meetings.forEach((meeting) => {
           this.daysForDelete.forEach((day) => {
             if (meeting.day === day) {

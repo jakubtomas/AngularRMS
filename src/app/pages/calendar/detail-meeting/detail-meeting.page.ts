@@ -189,6 +189,7 @@ export class DetailMeetingPage implements OnInit, OnDestroy {
   }
 
 
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

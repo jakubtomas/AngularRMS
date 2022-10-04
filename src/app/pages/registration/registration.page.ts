@@ -72,8 +72,6 @@ export class RegistrationPage implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
-
-
     this.firebaseErrorMessage = null;
     this.registerForm = new FormGroup(
       {
@@ -98,6 +96,7 @@ export class RegistrationPage implements OnInit {
 
 
   private passwordMatchValidator(model: FormGroup): ValidationErrors {
+
     const password = model.get('password');
     const password2 = model.get('password2');
 

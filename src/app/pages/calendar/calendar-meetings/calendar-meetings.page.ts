@@ -9,8 +9,10 @@ import * as moment from 'moment';
 import { CalendarComponent } from 'ionic2-calendar';
 import { Business } from '../../../interfaces/business';
 import { BusinessService } from '../../../services/business.service';
-import { Subscription } from 'rxjs';
+import { forkJoin, of, Subscription, zip } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { first, map, switchMap, take, tap } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-calendar-meetings',
@@ -118,8 +120,10 @@ export class CalendarMeetingsPage implements OnInit, OnDestroy {
 
 
     if (this.selectedBusinessId && dateForFirestore) {
+      console.log('by id');
       this.getMeetingsByIdBusinessByDate(this.selectedBusinessId, dateForFirestore);
     } else {
+      console.log('by idUser');
       this.getMeetingsByIdUserByDate(this.idUser, dateForFirestore);
     }
 
@@ -141,21 +145,38 @@ export class CalendarMeetingsPage implements OnInit, OnDestroy {
   }
 
   private getMeetingsByIdBusinessByDate(idBusiness: string, dateForCalendar: string): void {
+    //of(3).pipe(switchMap(value => of('string'))).subscribe(value => { value })
+    // this.selectOneMeetingWithUserInformation();
+    this.meetingService.getMeetingsByIdBusinessByOneDay(idBusiness, dateForCalendar).pipe(
+      tap((data) => {
+        console.log('      ');
+        console.log('data S');
+        console.table(data);
+        console.log('      ');
+      }),
+      switchMap((meetings: Meeting[]) =>
+        forkJoin(meetings.map((meeting: Meeting) =>
+          this.meetingService.getOneMeetingWithUserInformation(meeting.id)
+            .pipe(first())
+        )).pipe(map(parameter => ({ meetings, parameter })))
+      )).subscribe(meetings => {
 
-    this.meetingService.getMeetingsByIdBusinessByOneDay(idBusiness, dateForCalendar).subscribe(meetings => {
+        console.log('Subscribe DATA');
+        console.log(meetings);
 
-      this.timeMeeting = meetings;
-      const helpArray = [];
+        // this.timeMeeting = meetings;
+        // const helpArray = [];
 
-      meetings.map(meeting => {
-        helpArray.push({ meeting });
+        // meetings.map(meeting => {
+        //   helpArray.push({ meeting });
+        // });
+
+        // this.meetingWithBusiness = helpArray;
+      }, error => {
+        console.log('error');
+
+        console.log(error);
       });
-
-      this.meetingWithBusiness = helpArray;
-
-    }, error => {
-      console.log(error);
-    });
   }
 
   selectMeeting(meeting: Meeting): void {

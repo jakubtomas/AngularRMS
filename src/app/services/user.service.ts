@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection, DocumentReference } from '@angular/fire/compat/firestore';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, take, tap } from 'rxjs/operators';
 import { UserDetails } from '../interfaces/userDetails';
 
 @Injectable({
@@ -38,7 +38,6 @@ export class UserService {
 
   getUserDetailsInformation(idUser?: string): Observable<any> {
 
-
     if (idUser == null) {
       idUser = this.myIdUser;
     }
@@ -50,6 +49,7 @@ export class UserService {
     idUser = null;
 
     return this.userCollection2.snapshotChanges().pipe(
+      //take(1),
       map(changes => changes.map(a => {
         const data = a.payload.doc.data() as UserDetails;
         data.idUser = a.payload.doc.id;
